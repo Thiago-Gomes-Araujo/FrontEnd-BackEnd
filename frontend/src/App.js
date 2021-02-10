@@ -1,4 +1,8 @@
 import Header from './components/Header';
+
+import TaskForm from './components/TaskForm';
+
+import TaskList from './components/TaskList';
 import './App.css';
 
 function App() {
@@ -7,28 +11,11 @@ function App() {
       <div className="app-wrapper">
         <Header />
         <div className="main">
-          <form action="">
-            <input type="text" className="task-input"/>
-            <div className="buttons">
-              <button type="submit" className="btn add-task-btn">Adicionar</button>
-              <button className="btn clear-btn">Limpar</button>
-            </div>
-          </form>
-          <div>
-            <ul className="list-tasks">
-              <li className="list-item">
-                <span>Tarefa 1</span>
-                <div>
-                  <button>Deletar</button>
-                  <button>Editar</button>
-                </div>
-              </li>
-            </ul>
-          </div>
+        <TaskForm />
+        <TaskList />
         </div>
       </div>
     </div>
   );
 }
-
 export default App;
