@@ -1,44 +1,57 @@
-import { useState } from 'react';
-import api from '../../service/api';
+import React, { useContext, useState } from 'react';
+import { TaskContext } from '../../context/TaskContext';
+
 import './styles.css';
 
 function TaskForm(){
-  const [title, setTitle] = useState("")
-  const [description, setdescription] = useState("")
+  const { addTask, clearList } = useContext(TaskContext);
 
-  const handleSubmit = async (event)=> {
-    event.preventDefaut()
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
-    try {
-      await api.post("/", {
-        title,
-        description
-      })
-      
-    } catch (error) {
-      console.log('Ocorreu um erro ao adicionar o Registro' + error);
-    }
+  const handleChangeTitle = (event) => {
+    setTitle(event.target.value);
+  }
+
+  const handleChangeDescription = (event) => {
+    setDescription(event.target.value);
+  }
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    addTask(title, description);
+    setTitle('');
+    setDescription('');
+  }
+
+  const handleClearList = (event) => {
+    event.preventDefault();
+    clearList();
   }
 
   return (
     <form onSubmit={handleSubmit} className="form">
       <input 
-        type="text" 
-        className="task-input" 
-        placeholder="Add Titulo"
-        required
+        onChange={handleChangeTitle}
         value={title}
-      />
-      <input 
         type="text" 
         className="task-input" 
-        placeholder="Add Descrição"
+        placeholder="Add title..."
         required
-        value={description}
       />
+
+      <input 
+        onChange={handleChangeDescription}
+        value={description}
+        type="text" 
+        className="task-input" 
+        placeholder="Add description..."
+        required
+      />
+
       <div className="buttons">
         <button type="submit" className="btn add-task-btn">Adicionar</button>
-        <button className="btn clear-btn">Limpar</button>
+        <button className="btn clear-btn" onClick={handleClearList}>Limpar</button>
       </div>
     </form>
   );
